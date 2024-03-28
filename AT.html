@@ -9,6 +9,10 @@
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     background-color: #f4f4f4;
   }
 
@@ -17,8 +21,6 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
-    margin: auto;
   }
 
   .form-group {
@@ -59,25 +61,12 @@
   #snapshot:hover {
     background-color: #218838;
   }
-
-  #timediff {
-    margin-top: 10px;
-    font-weight: bold;
-  }
-
-  .github-link {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 9999;
-    display: none;
-  }
 </style>
 </head>
 <body>
 
 <div class="container">
-  <h2 style="text-align: center;">Student Attendance</h2>
+  <h2>Student Attendance</h2>
   <div class="form-group">
     <label for="student">Select Student:</label>
     <select id="student">
@@ -106,15 +95,10 @@
     <input type="time" id="outtime" oninput="calculateTimeDifference()" disabled>
   </div>
   <div class="form-group" id="timediff"></div>
-  <div style="text-align: center;">
-    <button onclick="saveAttendance()">Save Attendance</button>
-    <button id="snapshot" onclick="takeSnapshot()">Take Snapshot</button>
-    <button id="errorBtn" style="display:none;" onclick="showError()">Error Button</button>
-  </div>
+  <button onclick="saveAttendance()">Save Attendance</button>
+  <button id="snapshot" onclick="takeSnapshot()">Take Snapshot</button>
+  <button id="errorBtn" style="display:none;" onclick="showError()">Error Button</button>
 </div>
-
-<!-- GitHub Link -->
-<a href="https://github.com/mahmed-eng?tab=repositories" target="_blank" class="github-link">&#x1F4BB;</a>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
 <script>
@@ -194,16 +178,7 @@
 
   // Add event listener to student select field
   document.getElementById("student").addEventListener("change", enableFields);
-
-  // Show GitHub Link after a delay
-  setTimeout(function() {
-    document.querySelector(".github-link").style.display = "block";
-  }, 3000); // Adjust the delay as needed
 </script>
-
-<footer style="text-align: center; margin-top: 20px;">
-  &copy; 2024 Muhammad Ahmed Hashmi | <a href="https://github.com/mahmed-eng?tab=repositories" target="_blank">&#x1F4BB; GitHub</a>
-</footer>
 
 </body>
 </html>
