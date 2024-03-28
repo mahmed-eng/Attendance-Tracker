@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Attendance</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+  }
+
+  .container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  select, input[type="time"], input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  #snapshot {
+    background-color: #28a745;
+  }
+
+  #snapshot:hover {
+    background-color: #218838;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Student Attendance</h2>
+  <div class="form-group">
+    <label for="student">Select Student:</label>
+    <select id="student">
+      <option value="a">Ali</option>
+      <option value="b">Ammar</option>
+      <option value="c">Hassan</option>
+      <option value="d">Mohib</option>
+      <option value="e">Nasheed</option>
+      <option value="f">Noman</option>
+      <option value="g">Nazir</option>
+      <option value="h">Sami</option>
+      <option value="i">Umais</option>
+      <option value="j">Yousha</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="date">Date:</label>
+    <input type="date" id="date" disabled>
+  </div>
+  <div class="form-group">
+    <label for="intime">In Time:</label>
+    <input type="time" id="intime" oninput="calculateTimeDifference()" disabled>
+  </div>
+  <div class="form-group">
+    <label for="outtime">Out Time:</label>
+    <input type="time" id="outtime" oninput="calculateTimeDifference()" disabled>
+  </div>
+  <div class="form-group" id="timediff"></div>
+  <button onclick="saveAttendance()">Save Attendance</button>
+  <button id="snapshot" onclick="takeSnapshot()">Take Snapshot</button>
+  <button id="errorBtn" style="display:none;" onclick="showError()">Error Button</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+<script>
+  function enableFields() {
+    document.getElementById("date").disabled = false;
+    document.getElementById("intime").disabled = false;
+    document.getElementById("outtime").disabled = false;
+  }
+
+  function calculateTimeDifference() {
+    var intime = document.getElementById("intime").valueAsDate;
+    var outtime = document.getElementById("outtime").valueAsDate;
+    if (intime && outtime) {
+      var diff = new Date(outtime - intime);
+      var hours = diff.getUTCHours();
+      var minutes = diff.getUTCMinutes();
+      
+      // Handle the case when out time is before in time (considering it might be on the next day)
+      if (hours < 0) {
+        hours += 24;
+      }
+      
+      document.getElementById("timediff").innerText = "Time Difference: " + hours + " hours " + minutes + " minutes";
+    } else {
+      document.getElementById("timediff").innerText = "";
+    }
+  }
+
+  function saveAttendance() {
+    // Retrieve values
+    var student = document.getElementById("student").value;
+    var date = document.getElementById("date").value;
+    var intime = document.getElementById("intime").value;
+    var outtime = document.getElementById("outtime").value;
+
+    // Perform validation
+    if (date === "" || intime === "" || outtime === "") {
+      document.getElementById("errorBtn").style.display = "block";
+      return;
+    } else {
+      document.getElementById("errorBtn").style.display = "none";
+    }
+
+    // Do something with the values (for now, just log them)
+    console.log("Student: " + student);
+    console.log("Date: " + date);
+    console.log("In Time: " + intime);
+    console.log("Out Time: " + outtime);
+  }
+
+  function takeSnapshot() {
+    // Hide the snapshot button temporarily to avoid capturing it
+    document.getElementById("snapshot").style.display = "none";
+
+    // Delay to allow the button to hide before capturing the screenshot
+    setTimeout(function() {
+      // Capture the snapshot
+      domtoimage.toBlob(document.querySelector(".container"))
+        .then(function (blob) {
+          // Create a temporary link element to download the image
+          var link = document.createElement('a');
+          link.download = 'attendance_snapshot.png';
+          link.href = window.URL.createObjectURL(blob);
+
+          // Simulate click on the link to trigger download
+          link.click();
+
+          // Show the snapshot button again
+          document.getElementById("snapshot").style.display = "block";
+        });
+    }, 100);
+  }
+
+  function showError() {
+    alert("Please fill in all fields.");
+  }
+
+  // Add event listener to student select field
+  document.getElementById("student").addEventListener("change", enableFields);
+</script>
+
+</body>
+</html>
