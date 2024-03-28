@@ -64,6 +64,14 @@
     margin-top: 10px;
     font-weight: bold;
   }
+
+  .github-link {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: none;
+  }
 </style>
 </head>
 <body>
@@ -104,6 +112,9 @@
     <button id="errorBtn" style="display:none;" onclick="showError()">Error Button</button>
   </div>
 </div>
+
+<!-- GitHub Link -->
+<a href="https://github.com/mahmed-eng?tab=repositories" target="_blank" class="github-link">&#x1F4BB;</a>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
 <script>
@@ -183,7 +194,16 @@
 
   // Add event listener to student select field
   document.getElementById("student").addEventListener("change", enableFields);
+
+  // Show GitHub Link after a delay
+  setTimeout(function() {
+    document.querySelector(".github-link").style.display = "block";
+  }, 3000); // Adjust the delay as needed
 </script>
+
+<footer style="text-align: center; margin-top: 20px;">
+  &copy; 2024 Muhammad Ahmed Hashmi | <a href="https://github.com/mahmed-eng?tab=repositories" target="_blank">&#x1F4BB; GitHub</a>
+</footer>
 
 </body>
 </html>
