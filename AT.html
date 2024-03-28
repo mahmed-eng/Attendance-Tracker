@@ -9,10 +9,6 @@
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     background-color: #f4f4f4;
   }
 
@@ -21,6 +17,8 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: auto;
   }
 
   .form-group {
@@ -61,12 +59,17 @@
   #snapshot:hover {
     background-color: #218838;
   }
+
+  #timediff {
+    margin-top: 10px;
+    font-weight: bold;
+  }
 </style>
 </head>
 <body>
 
 <div class="container">
-  <h2>Student Attendance</h2>
+  <h2 style="text-align: center;">Student Attendance</h2>
   <div class="form-group">
     <label for="student">Select Student:</label>
     <select id="student">
@@ -95,9 +98,11 @@
     <input type="time" id="outtime" oninput="calculateTimeDifference()" disabled>
   </div>
   <div class="form-group" id="timediff"></div>
-  <button onclick="saveAttendance()">Save Attendance</button>
-  <button id="snapshot" onclick="takeSnapshot()">Take Snapshot</button>
-  <button id="errorBtn" style="display:none;" onclick="showError()">Error Button</button>
+  <div style="text-align: center;">
+    <button onclick="saveAttendance()">Save Attendance</button>
+    <button id="snapshot" onclick="takeSnapshot()">Take Snapshot</button>
+    <button id="errorBtn" style="display:none;" onclick="showError()">Error Button</button>
+  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
