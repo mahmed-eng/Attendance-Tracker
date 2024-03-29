@@ -81,6 +81,7 @@
   <div class="form-group">
     <label for="student">Select Student:</label>
     <select id="student">
+      <option value="aa">----</option>
       <option value="a">Ali</option>
       <option value="b">Ammar</option>
       <option value="c">Hassan</option>
@@ -106,6 +107,7 @@
     <input type="time" id="outtime" oninput="calculateTimeDifference()" disabled>
   </div>
   <div class="form-group" id="timediff"></div>
+  <div class="form-group" id="selectedStudent"></div>
   <div style="text-align: center;">
     <button onclick="saveAttendance()">Save Attendance</button>
     <button id="snapshot" onclick="takeSnapshot()">Take Snapshot</button>
@@ -122,6 +124,13 @@
     document.getElementById("date").disabled = false;
     document.getElementById("intime").disabled = false;
     document.getElementById("outtime").disabled = false;
+    updateSelectedStudent(); // Update selected student name
+  }
+
+  function updateSelectedStudent() {
+    var selectedIndex = document.getElementById("student").selectedIndex;
+    var selectedOption = document.getElementById("student").options[selectedIndex];
+    document.getElementById("selectedStudent").innerText = "Selected Student: " + selectedOption.text;
   }
 
   function calculateTimeDifference() {
@@ -206,6 +215,9 @@
   setTimeout(function() {
     document.querySelector(".github-link").style.display = "block";
   }, 3000); // Adjust the delay as needed
+
+  // Update selected student name initially
+  updateSelectedStudent();
 </script>
 
 <footer style="text-align: center; margin-top: 20px;">
